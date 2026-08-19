@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const subtitle = document.getElementById('auth-subtitle');
 
   // Unified API URL using localhost
-  const API_URL = 'https://tools.binakamke.com/api';
+  const API_URL = 'safarsathi-bus-bookin-production.up.railway.app';
 
   function showToast(message, heading = "Notification", callback = null) {
     const toast = document.getElementById('custom-toast');

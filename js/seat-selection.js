@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Try dedicated API endpoint first
     if (busId && travelDate) {
       try {
-        const res = await fetch(`https://tools.binakamke.com/api/booked-seats?busId=${busId}&date=${travelDate}`);
+        const res = await fetch(`safarsathi-bus-bookin-production.up.railway.app/booked-seats?busId=${busId}&date=${travelDate}`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data)) {
