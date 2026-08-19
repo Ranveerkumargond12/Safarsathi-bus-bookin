@@ -175,7 +175,7 @@ app.post('/api/bookings', (req, res) => {
 });
 
 // Start Server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on http://localhost:${PORT}`);
 });
