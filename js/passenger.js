@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 2. 🔥 FIX: Database API call to save booked seats immediately in Backend
       try {
-        const response = await fetch('http://localhost:5000/api/book-ticket', {
+        const response = await fetch('https://safarsathi-bus-booking-production.up.railway.app', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function executeCancellation(pnr) {
     // 1. Backend Sync Attempt
     try {
-      await fetch(`https://tools.binakamke.com/api/cancel-booking`, {
+      await fetch(`https://safarsathi-bus-booking-production.up.railway.app/cancel-booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pnr: pnr, email: currentUser ? currentUser.email : '' })

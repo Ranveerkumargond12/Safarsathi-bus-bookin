@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Try dedicated API endpoint first
     if (busId && travelDate) {
       try {
-        const res = await fetch(`safarsathi-bus-bookin-production.up.railway.app/booked-seats?busId=${busId}&date=${travelDate}`);
+        const res = await fetch(`https://safarsathi-bus-booking-production.up.railway.app/booked-seats?busId=${busId}&date=${travelDate}`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data)) {
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Fetch all bookings from Backend Database API
     try {
-      const res = await fetch(`http://localhost:5000/api/my-bookings`);
+      const res = await fetch(`https://safarsathi-bus-booking-production.up.railway.app/api/my-bookings`);
       if (res.ok) {
         const allDbBookings = await res.json();
         if (Array.isArray(allDbBookings)) {
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Fetch Selected Bus Details from Database
   try {
-    const response = await fetch('http://localhost:5000/api/buses');
+    const response = await fetch('https://safarsathi-bus-booking-production.up.railway.app/buses');
     if (response.ok) {
       const buses = await response.json();
       const selectedBusObj = buses.find(b => String(b.id) === String(busId));

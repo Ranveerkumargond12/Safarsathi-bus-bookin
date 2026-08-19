@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_URL = 'safarsathi-bus-bookin-production.up.railway.app';
+  const API_URL = 'https://safarsathi-bus-booking-production.up.railway.app';
 
   // Check Admin Security
   const savedUser = JSON.parse(localStorage.getItem('safarsathi_user') || '{}');
