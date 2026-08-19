@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const API_URL = 'https://safarsathi-bus-booking-production.up.railway.app';
+  const API_URL = 'https://safarsathi-bus-booking-production.up.railway.app/api';
 
   // Check Admin Security
   const savedUser = JSON.parse(localStorage.getItem('safarsathi_user') || '{}');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load Dashboard Analytics & Dynamic Tables
 async function loadDashboardData() {
-  const API_URL = 'http://127.0.0.1:5000/api';
+  const API_URL = 'https://safarsathi-bus-booking-production.up.railway.app/api';
 
   let bookingsList = [];
   let busesList = [];
@@ -194,7 +194,7 @@ async function loadDashboardData() {
 async function deleteBus(busId) {
   if (!confirm('Kya aap sachme is bus ko delete karna chahte hain?')) return;
 
-  const API_URL = 'http://127.0.0.1:5000/api';
+  const API_URL = 'https://safarsathi-bus-booking-production.up.railway.app/api';
   try {
     const res = await fetch(`${API_URL}/admin/delete-bus/${busId}`, { method: 'DELETE' });
     const data = await res.json();

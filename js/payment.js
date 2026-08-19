@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         // Save to Database via API First
-        const response = await fetch('https://safarsathi-bus-booking-production.up.railway.app/bookings', {
+        const response = await fetch('https://safarsathi-bus-booking-production.up.railway.app/api/bookings', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dbBookingPayload)

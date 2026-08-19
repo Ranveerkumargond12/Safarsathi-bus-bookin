@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function executeCancellation(pnr) {
     // 1. Backend Sync Attempt
     try {
-      await fetch(`https://safarsathi-bus-booking-production.up.railway.app/cancel-booking`, {
+      await fetch(`https://safarsathi-bus-booking-production.up.railway.app/api/cancel-booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pnr: pnr, email: currentUser ? currentUser.email : '' })
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Backend Fetch
     try {
       const userEmail = currentUser.email;
-      const res = await fetch(`http://127.0.0.1:5000/api/my-bookings?email=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`https://safarsathi-bus-booking-production.up.railway.app/api/my-bookings?email=${encodeURIComponent(userEmail)}`);
       if (res.ok) {
         allBookings = await res.json();
       }

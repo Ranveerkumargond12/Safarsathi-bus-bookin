@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 2. Fetch Data Directly From Backend Database API with Route Parameters
   try {
-    const apiUrl = `https://safarsathi-bus-booking-production.up.railway.app/buses?from=${encodeURIComponent(fromLocation)}&to=${encodeURIComponent(toLocation)}`;
+    const apiUrl = `https://safarsathi-bus-booking-production.up.railway.app/api/buses?from=${encodeURIComponent(fromLocation)}&to=${encodeURIComponent(toLocation)}`;
     const response = await fetch(apiUrl);
     const dbBuses = await response.json();
 
