@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+  <!-- Baaki ke head elements (title, meta, etc.) -->
+
+  <!-- Google Translate Top Banner Force Hide -->
+  <style type="text/css">
+    iframe.goog-te-banner-frame,
+    .goog-te-banner-frame,
+    .goog-te-banner,
+    #goog-gt-tt,
+    .goog-te-balloon-frame,
+    div.skiptranslate,
+    #google_translate_element .goog-te-gadget-simple {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      width: 0 !important;
+    }
+
+    body {
+      top: 0px !important;
+      position: static !important;
+      min-height: 100% !important;
+    }
+
+    .goog-text-highlight {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+  </style>
+</head>
+  <!-- Google Translate ki speed badhane ke liye preconnect -->
+  <link rel="preconnect" href="https://translate.googleapis.com" />
+  <link rel="preconnect" href="https://translate.google.com" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelGo - Complete Payment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/passenger.css">
+  <style>
+    .payment-options { margin-top: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .payment-method { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; cursor: pointer; }
+    .payment-method.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+    .method-header { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #fff; cursor: pointer; }
+    .form-panel { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .form-panel.active { display: block; }
+    .row-inputs { display: flex; gap: 10px; margin-top: 8px; }
+    
+    /* Modal Styling */
+    .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-overlay.show { display: flex; }
+    .modal-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 25px; text-align: center; max-width: 350px; width: 90%; }
+    .success-icon { font-size: 45px; color: #34d399; margin-bottom: 10px; }
+    .pnr-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; margin: 15px 0; font-size: 1.1rem; font-weight: bold; color: #38bdf8; }
+    .done-btn { width: 100%; padding: 10px; background: #38bdf8; border: none; color: #0f172a; font-weight: bold; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    <div class="glass-card">
+      
+      <!-- Header -->
+      <div class="card-header">
+        <a href="passenger.html" class="back-link">← Back to Passengers</a>
+        <h2>Complete Payment</h2>
+      </div>
+
+      <!-- Booking Fare Summary -->
+      <div class="summary-bar" style="flex-direction: column; gap: 8px; align-items: stretch;">
+        <div style="display: flex; justify-content: space-between;">
+          <span>Selected Seats:</span>
+          <strong id="summarySeats">--</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Passengers Count:</span>
+          <strong id="summaryPassengers">0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Base Ticket Fare:</span>
+          <strong id="display-base-fare">₹0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>GST & Service Charge:</span>
+          <strong id="display-tax-fare">₹0</strong>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; font-size: 1.1rem;">
+          <span>Total Payable:</span>
+          <strong id="summaryAmount" class="price-text">₹0</strong>
+        </div>
+      </div>
+
+      <!-- Payment Form -->
+      <form id="paymentForm">
+        <h3 style="margin-top: 15px; font-size: 1rem; color: #cbd5e1;">Choose Payment Method</h3>
+        
+        <div class="payment-options">
+          
+          <!-- UPI Option -->
+          <div class="payment-method active">
+            <label class="method-header">
+              <input type="radio" name="paymentType" value="upi" checked>
+              <i class="fa-solid fa-qrcode" style="color: #38bdf8;"></i> UPI / Google Pay / PhonePe
+            </label>
+            <div class="form-panel active" id="upiForm">
+              <input type="text" class="glass-input" placeholder="Enter UPI ID (e.g. mobile@upi)">
+            </div>
+          </div>
+
+          <!-- Card Option -->
+          <div class="payment-method">
+            <label class="method-header">
+              <input type="radio" name="paymentType" value="card">
+              <i class="fa-solid fa-credit-card" style="color: #38bdf8;"></i> Credit / Debit Card
+            </label>
+            <div class="form-panel" id="cardForm">
+              <input type="text" class="glass-input" placeholder="Card Number (16 Digits)">
+              <div class="row-inputs">
+                <input type="text" class="glass-input" placeholder="MM/YY">
+                <input type="password" class="glass-input" placeholder="CVV">
+              </div>
+            </div>
+          </div>
+
+          <!-- Net Banking Option -->
+          <div class="payment-method">
+            <label class="method-header">
+              <input type="radio" name="paymentType" value="netbanking">
+              <i class="fa-solid fa-building-columns" style="color: #38bdf8;"></i> Net Banking
+            </label>
+            <div class="form-panel" id="netbankingForm">
+              <select class="glass-input" style="background: #1e293b; color: #fff;">
+                <option>Select Bank</option>
+                <option>SBI - State Bank of India</option>
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>Axis Bank</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-proceed" id="payNowBtn" style="margin-top: 20px;">
+          <i class="fa-solid fa-lock"></i> <span id="btn-pay-text">Proceed to Pay</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Success Modal Popup -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-card">
+      <i class="fa-solid fa-circle-check success-icon"></i>
+      <h3 style="color: #fff;">Payment Successful!</h3>
+      <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 5px;">Your ticket has been confirmed.</p>
+      
+      <div class="pnr-box">
+        PNR: <span id="ticketId">SS-000000</span>
+      </div>
+
+      <button type="button" class="done-btn" id="doneBtn">View My Bookings</button>
+    </div>
+  </div>
+
+  <script src="js/auth-check.js"></script>
+  <script src="js/payment.js"></script>
+ <!-- Google Translate Fast Background Engine -->
+<div id="google_translate_element" style="display:none;"></div>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,bn,mr,te,ta,gu,ur',
+      autoDisplay: false,
+      multilanguagePage: true
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
